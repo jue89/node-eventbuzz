@@ -39,7 +39,9 @@
     "clearMocks": true
   },
   "dependencies": {
+    "borc": "^2.1.2",
     "clone": "^2.1.2",
-    "qsem": "^1.0.0"
+    "qsem": "^1.0.0",
+    "tsfoo": "^0.1.0"
   }
 }
