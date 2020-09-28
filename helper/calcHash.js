@@ -9,4 +9,4 @@ module.exports = (items) => {
 		hash.update(NULLBYTE);
 	});
 	return hash.digest('hex');
-}
+};

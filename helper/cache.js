@@ -35,9 +35,9 @@ module.exports = async ({cachePath, deserialize, serialize}) => {
 		const content = serialize(obj);
 		await writeSem.limit(async () => {
 			await writeFile(cacheFileTemp, content);
-			await rename(cacheFileTemp, cacheFile)
+			await rename(cacheFileTemp, cacheFile);
 		});
 	}
 
 	return {getCache, setCache};
-}
+};

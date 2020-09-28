@@ -17,7 +17,7 @@ test('getCache from non-existing file', async () => {
 	mockFs.readFile.mockImplementationOnce((path, cb) => cb(new Error('ENOENT')));
 	const cachePath = 'abc';
 	const {getCache} = await cacheFactory({cachePath});
-	const key = 'def'
+	const key = 'def';
 	const obj = await getCache(key);
 	expect(mockFs.readFile.mock.calls[0][0]).toEqual(path.join(cachePath, key));
 	expect(obj).toMatchObject({});
