@@ -6,7 +6,7 @@ const sinkFactory = require('./lib/sink.js');
 const calcHash = require('./helper/calcHash.js');
 const cacheFactory = require('./helper/cache.js');
 
-async function openEvenstore (storePath) {
+async function openEventstore (storePath) {
 	// Open database
 	const db = await tsfoo.openDB(storePath);
 
@@ -23,4 +23,4 @@ async function openEvenstore (storePath) {
 	return {source, sink};
 }
 
-module.exports = {openEvenstore};
+module.exports = {openEventstore};
