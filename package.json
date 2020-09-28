@@ -39,6 +39,7 @@
     "clearMocks": true
   },
   "dependencies": {
-    "clone": "^2.1.2"
+    "clone": "^2.1.2",
+    "qsem": "^1.0.0"
   }
 }
