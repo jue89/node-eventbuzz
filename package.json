@@ -1,7 +1,7 @@
 {
   "name": "eventbuzz",
-  "version": "0.0.0",
-  "description": "Footurama",
+  "version": "0.1.0",
+  "description": "Tiny event sourcing framework",
   "main": "index.js",
   "scripts": {
     "test": "happiness && jest --verbose",
