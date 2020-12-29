@@ -16,10 +16,36 @@ A tiny event-sourcing framework.
 
 ```js
 const {openEventstore} = require('eventbuzz');
-openEventstore(dir).then((eventstore) => {...});
+openEventstore(dir[, opts]).then((eventstore) => {...});
 ```
 
-Opens an eventstore located in the directory `dir`. `eventstore` is an instance of **Eventstore**
+Opens an eventstore located in the directory `dir`. `eventstore` is an instance of **Eventstore**. `opts` is and optional object with the following properties:
+
+* `checkpoint`: An object or a factory function returning an object. Every item holds a checkpoint function, that checks the payload of every emitted event. It may throw an Error or returns the payload that is written into the event store. The factory function gets access to the Eventstore's `sink()` method. Cf. the example down below.
+
+An example for the `checkpoint` property:
+
+```js
+{
+	checkpoint: ({sink}) => ({ // sink() can be used to trace past events
+		'srcA': {
+			'eventA': (payload) => {
+				// synchronous check if payload contains the property id
+				assert(payload.id, 'Payload must have the property id');
+				return payload;
+			},
+			'eventB': async (payload) => {
+				// asynchronous generation of an id
+				payload.id = await genNewId();
+				return payload;
+			}
+		},
+		'srcB': {
+			'eventA': (payload) => {...},
+		}
+	})
+}
+```
 
 ### Class: Eventstore
 
@@ -70,7 +96,7 @@ This configuration will listen to the *event sources* `'srcA'` and `'srcB'`. For
 #### Method: emit()
 
 ```js
-source.emit(event[, payload]).then(() => {...});
+source.emit(event[, payload]).then((payload) => {...});
 ```
 
 Stores an *event* with the name `event`. The optional `payload` is stored along with the event. Returns a promise that is resolved once the event has been written into the store.
