@@ -105,6 +105,14 @@ sink.on('cached', () => {...});
 
 Fired after an the state has been written to disk.
 
+#### Event: error
+
+```js
+sink.on('error', (err) => {...});
+```
+
+Fired if one of the event handlers or observer throw an error.
+
 
 ## Example
 
