@@ -21,7 +21,7 @@ openEventstore(dir[, opts]).then((eventstore) => {...});
 
 Opens an eventstore located in the directory `dir`. `eventstore` is an instance of **Eventstore**. `opts` is and optional object with the following properties:
 
-* `checkpoint`: An object or a factory function returning an object. Every item holds a checkpoint function, that checks the payload of every emitted event. It may throw an Error or returns the payload that is written into the event store. The factory function gets access to the Eventstore's `sink()` method. Cf. the example down below.
+* `checkpoint`: An object or a factory function returning an object. Every item holds a checkpoint function, that checks the payload of every emitted event. It may throw an Error or returns the payload that is written into the event store. The factory function gets access to the Eventstore's `sink()` method. Cf. the example down below. Please note: The factory function is called upon the first opened source and may be called multiple times.
 * `rejectUnspecifiedEvents`: Boolean. Default: `false`. If set to `true`, every emitted event without a dedicated check function will be rejected.
 
 An example for the `checkpoint` property:
