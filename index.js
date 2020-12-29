@@ -6,7 +6,7 @@ const sinkFactory = require('./lib/sink.js');
 const calcHash = require('./helper/calcHash.js');
 const cacheFactory = require('./helper/cache.js');
 
-async function openEventstore (storePath) {
+async function openEventstore (storePath, opts = {}) {
 	// Open database
 	const db = await tsfoo.openDB(storePath);
 
@@ -17,8 +17,8 @@ async function openEventstore (storePath) {
 		deserialize: borc.decodeFirst
 	});
 
-	const source = await sourceFactory({db});
 	const sink = await sinkFactory({db, calcHash, getCache, setCache});
+	const source = await sourceFactory({db, sink, opts});
 
 	return {source, sink};
 }
