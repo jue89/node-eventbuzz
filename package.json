@@ -1,6 +1,6 @@
 {
   "name": "eventbuzz",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Tiny event sourcing framework",
   "main": "index.js",
   "scripts": {
