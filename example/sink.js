@@ -1,7 +1,7 @@
 const {openEventstore} = require('..');
 
 class Counter {
-	static getSchemeVersion () { return 1; }
+	static getSchemaVersion () { return 1; }
 	constructor () { this.counter = 0; }
 	inc (cnt) { this.counter += cnt; }
 	dec (cnt) { this.counter -= cnt; }

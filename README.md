@@ -67,7 +67,7 @@ eventstore.sink(opts).then((source) => { ... });
 Listens to the event streams of one or many *event sources*. `sink` is an instance of **Sink**. `opts` is an object with the following properties:
 
 * `init`: A function returning a freshly initialized state: `() => new MyState()`. `MyState` is a class which may implement the following methods:
-   * `static getSchemeVersion()`: Returns a version number for the scheme of the sink. This ensures that a cached state must be invalidized. Default: `return undefined;`.
+   * `static getSchemaVersion()`: Returns a version number for the schema of the sink. This ensures that a cached state must be invalidized. Default: `return undefined;`.
    * `toObject()`: Returns an object that represents the current state. Default: `return this;`
    * `fromObject(obj)`: Restores the state from `obj`. Default: `Object.assign(this, obj);`
 * `handler`: An Object indicating which sources and which events to listen to. (See the example down below for further information.)
@@ -178,7 +178,7 @@ openEventstore('events').then(async (eventstore) => {
 const {openEventstore} = require('eventbuzz');
 
 class Counter {
-	static getSchemeVersion () { return 1; }
+	static getSchemaVersion () { return 1; }
 	constructor () { this.counter = 0; }
 	inc (cnt) { this.counter += cnt; }
 	dec (cnt) { this.counter -= cnt; }
