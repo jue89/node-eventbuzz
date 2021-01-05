@@ -23,6 +23,7 @@ Opens an eventstore located in the directory `dir`. `eventstore` is an instance 
 
 * `checkpoint`: An object or a factory function returning an object. Every item holds a checkpoint function, that checks the payload of every emitted event. It may throw an Error or returns the payload that is written into the event store. The factory function gets access to the Eventstore's `sink()` method. Cf. the example down below. Please note: The factory function is called upon the first opened source and may be called multiple times.
 * `rejectUnspecifiedEvents`: Boolean. Default: `false`. If set to `true`, every emitted event without a dedicated check function will be rejected.
+* `customTypes`: Array of `class`es. Default: `[]`. If one of the state instances makes use of the given classes, the class type won't disappear when reading back from cache. If the class implements `fromObject()` and `toObject()`, the class data can be packed and unpacked. Cf. the description of `MyState` for further details.
 
 An example for the `checkpoint` property:
 
