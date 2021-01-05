@@ -23,6 +23,7 @@ Opens an eventstore located in the directory `dir`. `eventstore` is an instance 
 
 * `checkpoint`: An object or a factory function returning an object. Every item holds a checkpoint function, that checks the payload of every emitted event. It may throw an Error or returns the payload that is written into the event store. The factory function gets access to the Eventstore's `sink()` method. Cf. the example down below. Please note: The factory function is called upon the first opened source and may be called multiple times.
 * `rejectUnspecifiedEvents`: Boolean. Default: `false`. If set to `true`, every emitted event without a dedicated check function will be rejected.
+* `customTypes`: Array of `class`es. Default: `[]`. If one of the state instances makes use of the given classes, the class type won't disappear when reading back from cache. If the class implements `fromObject()` and `toObject()`, the class data can be packed and unpacked. Cf. the description of `MyState` for further details.
 
 An example for the `checkpoint` property:
 
@@ -67,7 +68,7 @@ eventstore.sink(opts).then((source) => { ... });
 Listens to the event streams of one or many *event sources*. `sink` is an instance of **Sink**. `opts` is an object with the following properties:
 
 * `init`: A function returning a freshly initialized state: `() => new MyState()`. `MyState` is a class which may implement the following methods:
-   * `static getSchemeVersion()`: Returns a version number for the scheme of the sink. This ensures that a cached state must be invalidized. Default: `return undefined;`.
+   * `static getSchemaVersion()`: Returns a version number for the schema of the sink. This ensures that a cached state must be invalidized. Default: `return undefined;`.
    * `toObject()`: Returns an object that represents the current state. Default: `return this;`
    * `fromObject(obj)`: Restores the state from `obj`. Default: `Object.assign(this, obj);`
 * `handler`: An Object indicating which sources and which events to listen to. (See the example down below for further information.)
@@ -178,7 +179,7 @@ openEventstore('events').then(async (eventstore) => {
 const {openEventstore} = require('eventbuzz');
 
 class Counter {
-	static getSchemeVersion () { return 1; }
+	static getSchemaVersion () { return 1; }
 	constructor () { this.counter = 0; }
 	inc (cnt) { this.counter += cnt; }
 	dec (cnt) { this.counter -= cnt; }
