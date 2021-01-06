@@ -47,3 +47,18 @@ test('serialize custom types even if the converter method returns the class itse
 	const {serialize} = serializationFactory({customTypes});
 	expect(serialize(obj)).toBeInstanceOf(Buffer);
 });
+
+test('serialize and deserialize custom types with static converter methods', () => {
+	class A {
+		constructor (data) { Object.assign(this, data); }
+		static toObject (inst) { return inst.a; }
+		static fromObject (obj) { return new A({b: obj}); }
+	};
+	const obj = new A({a: 1, b: 2});
+	const customTypes = [A];
+	const {serialize, deserialize} = serializationFactory({customTypes});
+	const obj2 = deserialize(serialize(obj));
+	expect(obj2).toBeInstanceOf(A);
+	expect(obj2.b).toBe(1);
+	expect(obj2.a).toBeUndefined();
+});
