@@ -74,6 +74,7 @@ Listens to the event streams of one or many *event sources*. `sink` is an instan
 * `handler`: An Object indicating which sources and which events to listen to. (See the example down below for further information.)
 * `observer`: A function that is called in every sink's state (include the initial, resp. cached): `(state) => {...}`. May return a promise to throttle event processing.
 * `storeInterval`: An interval in milliseconds. If the state changes, it will be cached on disk after the given time. Default: `2000`.
+* `name`: Sink name considered for finding the right cache.
 
 An example for the `handler` property:
 
